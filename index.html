@@ -1,0 +1,1399 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>2022 개정 수학과 교육과정 암기 마스터 (1·2페이지)</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Pretendard:wght@300;400;500;600;700;800&display=swap');
+    body {
+      font-family: 'Pretendard', sans-serif;
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+      height: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #cbd5e1;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #94a3b8;
+    }
+    .diff-correct { color: #166534; background-color: #dcfce7; padding: 0 1px; border-radius: 2px; }
+    .diff-missing { color: #991b1b; background-color: #fee2e2; text-decoration: line-through; padding: 0 2px; border-radius: 2px; }
+    .diff-extra { color: #854d0e; background-color: #fef9c3; padding: 0 2px; border-radius: 2px; }
+  </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased min-h-screen flex flex-col">
+
+  <!-- Header -->
+  <header class="bg-indigo-900 text-white shadow-lg sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 py-3 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center space-x-3">
+        <span class="bg-indigo-600 text-amber-300 p-2.5 rounded-xl font-black text-xl shadow-inner">
+          <i class="fa-solid fa-graduation-cap"></i>
+        </span>
+        <div>
+          <h1 class="text-lg sm:text-xl font-bold tracking-tight flex items-center gap-2">
+            2022 개정 수학과 완벽 암기
+            <span class="text-xs bg-amber-400 text-indigo-950 font-bold px-2 py-0.5 rounded-full">1·2페이지 원문</span>
+          </h1>
+          <p class="text-xs text-indigo-200">목표 · 교수학습방향/방법 · 평가방향/방법 토시 하나 놓치지 않는 백지 인출기</p>
+        </div>
+      </div>
+
+      <!-- Quick Action Stats -->
+      <div class="flex items-center gap-2 text-xs">
+        <div class="bg-indigo-800/80 px-3 py-1.5 rounded-lg border border-indigo-700/50 flex items-center gap-2">
+          <span class="text-indigo-300">외운 항목:</span>
+          <span id="mastered-count" class="font-bold text-amber-300">0</span> / <span id="total-count">0</span>
+        </div>
+        <button id="btn-toggle-bookmark-only" onclick="toggleBookmarkFilter()" class="bg-indigo-800 hover:bg-indigo-700 px-3 py-1.5 rounded-lg border border-indigo-700/50 transition flex items-center gap-1.5 text-indigo-200">
+          <i class="fa-solid fa-star text-amber-400"></i>
+          <span>중요 암기만</span>
+        </button>
+      </div>
+    </div>
+
+    <!-- Navigation / Mode Bar -->
+    <div class="bg-indigo-950 border-t border-indigo-800/60 px-4 sm:px-6 py-2">
+      <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-2">
+        <!-- Learning Modes -->
+        <div class="flex items-center gap-1 sm:gap-2 overflow-x-auto py-1">
+          <button onclick="setMode('study')" id="mode-study" class="mode-btn px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 bg-indigo-600 text-white shadow">
+            <i class="fa-solid fa-book-open"></i> 1. 정독&가림
+          </button>
+          <button onclick="setMode('firstchar')" id="mode-firstchar" class="mode-btn px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 text-indigo-200 hover:bg-indigo-800">
+            <i class="fa-solid fa-font"></i> 2. 초성/첫글자
+          </button>
+          <button onclick="setMode('cloze')" id="mode-cloze" class="mode-btn px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 text-indigo-200 hover:bg-indigo-800">
+            <i class="fa-solid fa-puzzle-piece"></i> 3. 빈칸 채우기
+          </button>
+          <button onclick="setMode('typing')" id="mode-typing" class="mode-btn px-3 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1.5 text-indigo-200 hover:bg-indigo-800">
+            <i class="fa-solid fa-keyboard text-amber-300"></i> 4. 백지 인출&정밀대조
+          </button>
+        </div>
+
+        <!-- Mode Sub-controls -->
+        <div id="mode-sub-controls" class="flex items-center gap-2 text-xs">
+          <!-- Dynamic inject -->
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="max-w-7xl mx-auto w-full px-4 sm:px-6 py-6 flex-1 grid grid-cols-1 lg:grid-cols-12 gap-6">
+
+    <!-- Left Sidebar: Category & Item List -->
+    <aside class="lg:col-span-4 xl:col-span-3 flex flex-col gap-4">
+      <!-- Category Selection Tabs -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+        <h2 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2 flex items-center justify-between">
+          <span>대분류 (1·2페이지 구조)</span>
+          <span class="text-[10px] text-indigo-600 font-semibold cursor-pointer hover:underline" onclick="resetAllProgress()">진도 초기화</span>
+        </h2>
+        <div class="space-y-1.5" id="category-list">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+
+      <!-- Quick Item Jump / Filter List -->
+      <div class="bg-white rounded-2xl p-4 shadow-sm border border-slate-200 flex-1 flex flex-col">
+        <div class="flex items-center justify-between mb-3">
+          <h3 class="text-xs font-bold text-slate-500 uppercase tracking-wider" id="current-section-title">소항목 목록</h3>
+          <span class="text-xs text-slate-400 font-medium" id="section-item-count">0 항목</span>
+        </div>
+        <div class="space-y-1 overflow-y-auto max-h-[480px] custom-scrollbar pr-1" id="subitem-list">
+          <!-- Injected via JS -->
+        </div>
+      </div>
+    </aside>
+
+    <!-- Right Workspace: Practice Area -->
+    <section class="lg:col-span-8 xl:col-span-9 flex flex-col gap-4">
+      
+      <!-- Current Item Header Card -->
+      <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200 relative overflow-hidden">
+        <div class="flex flex-wrap items-center justify-between gap-3 mb-2">
+          <div class="flex items-center gap-2">
+            <span id="badge-page" class="bg-amber-100 text-amber-800 text-xs px-2.5 py-0.5 rounded-full font-bold">1페이지</span>
+            <span id="badge-cat" class="bg-indigo-50 text-indigo-700 text-xs px-2.5 py-0.5 rounded-full font-semibold">수학과 목표</span>
+            <span id="badge-num" class="text-xs font-bold text-slate-400">#1</span>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <button onclick="speakCurrentText()" title="음성으로 듣기" class="p-2 text-slate-500 hover:text-indigo-600 hover:bg-indigo-50 rounded-lg transition">
+              <i class="fa-solid fa-volume-high"></i>
+            </button>
+            <button onclick="toggleCurrentBookmark()" id="btn-star" title="중요 항목 보관" class="p-2 text-slate-300 hover:text-amber-500 hover:bg-amber-50 rounded-lg transition">
+              <i class="fa-solid fa-star text-lg"></i>
+            </button>
+            <button onclick="markAsMastered()" id="btn-check" class="flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg border border-slate-300 text-slate-600 hover:border-emerald-500 hover:text-emerald-600 transition">
+              <i class="fa-regular fa-circle-check"></i>
+              <span>암기 완료 표시</span>
+            </button>
+          </div>
+        </div>
+
+        <h3 id="current-item-title" class="text-lg sm:text-xl font-extrabold text-slate-800 tracking-tight mb-1">
+          수학과 총괄 목표
+        </h3>
+        <p id="current-item-path" class="text-xs text-slate-400 font-medium">
+          2022 수학과 목표 > 총괄 목표
+        </p>
+      </div>
+
+      <!-- Interactive Learning Viewport -->
+      <div class="bg-white rounded-2xl p-6 shadow-sm border border-slate-200 min-h-[380px] flex flex-col justify-between" id="learning-viewport">
+        <!-- Injected via mode render function -->
+      </div>
+
+      <!-- Navigation & Shortcuts Footer -->
+      <div class="flex items-center justify-between bg-white rounded-2xl p-4 shadow-sm border border-slate-200">
+        <button onclick="prevItem()" class="flex items-center gap-2 px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm rounded-xl transition">
+          <i class="fa-solid fa-arrow-left"></i> 이전 문항 (Alt+←)
+        </button>
+
+        <div class="text-xs text-slate-400 hidden sm:flex items-center gap-3">
+          <span><kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-600 font-mono">Space</kbd> 정답 확인</span>
+          <span><kbd class="px-1.5 py-0.5 bg-slate-100 border border-slate-300 rounded text-slate-600 font-mono">Alt+Enter</kbd> 정밀 채점</span>
+        </div>
+
+        <button onclick="nextItem()" class="flex items-center gap-2 px-4 py-2 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition shadow-md shadow-indigo-200">
+          다음 문항 (Alt+→) <i class="fa-solid fa-arrow-right"></i>
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <script>
+    /* =====================================================================
+       2022 개정 수학과 교육과정 1, 2페이지 완전 원문 데이터베이스
+       (오타 보정 및 줄바꿈/기호 규격화 완료)
+       ===================================================================== */
+    const curriculumData = [
+      // ----- [Page 1] 2022 수학과 목표 -----
+      {
+        id: "target-main",
+        page: 1,
+        catId: "target",
+        catName: "2022 수학과 목표",
+        title: "총괄 목표",
+        text: "수학의 개념, 원리, 법칙을 이해하고 수학의 가치를 인식하며 바람직한 수학적 태도를 길러 수학적으로 추론하고 의사소통하며 다양한 현상과 연결하여 정보를 처리하고 문제를 창의적으로 해결하는 수학 교과 역량을 함양한다.",
+        keywords: ["개념, 원리, 법칙", "수학의 가치", "수학적 태도", "추론하고", "의사소통하며", "다양한 현상과 연결", "정보를 처리", "창의적으로 해결", "수학 교과 역량"]
+      },
+      {
+        id: "target-sub-1",
+        page: 1,
+        catId: "target",
+        catName: "2022 수학과 목표",
+        title: "세부 목표 (1) 문제해결",
+        text: "수학적 지식을 이해하고 활용하여 적극적이고 자신감 있게 여러 가지 문제를 해결한다.",
+        keywords: ["수학적 지식", "이해하고 활용", "적극적이고 자신감 있게", "여러 가지 문제"]
+      },
+      {
+        id: "target-sub-2",
+        page: 1,
+        catId: "target",
+        catName: "2022 수학과 목표",
+        title: "세부 목표 (2) 추론",
+        text: "수학적 사실에 대해 흥미와 관심을 갖고 추측과 정당화를 통해 추론한다.",
+        keywords: ["수학적 사실", "흥미와 관심", "추측과 정당화", "추론한다"]
+      },
+      {
+        id: "target-sub-3",
+        page: 1,
+        catId: "target",
+        catName: "2022 수학과 목표",
+        title: "세부 목표 (3) 의사소통",
+        text: "수학적 사고와 전략에 대해 의사소통하고 수학적 표현의 편리함을 인식한다.",
+        keywords: ["수학적 사고와 전략", "의사소통하고", "수학적 표현의 편리함", "인식한다"]
+      },
+      {
+        id: "target-sub-4",
+        page: 1,
+        catId: "target",
+        catName: "2022 수학과 목표",
+        title: "세부 목표 (4) 연결",
+        text: "수학의 개념, 원리, 법칙 간의 관련성을 탐구하고 실생활이나 타 교과에 수학을 적용하여 수학의 유용성을 인식한다.",
+        keywords: ["관련성을 탐구", "실생활이나 타 교과에 수학을 적용", "수학의 유용성"]
+      },
+      {
+        id: "target-sub-5",
+        page: 1,
+        catId: "target",
+        catName: "2022 수학과 목표",
+        title: "세부 목표 (5) 정보처리",
+        text: "목적에 맞게 교구나 공학 도구를 활용하며 자료를 수집하고 처리하여 정보에 근거한 합리적 의사 결정을 한다.",
+        keywords: ["교구나 공학 도구", "자료를 수집하고 처리", "합리적 의사 결정"]
+      },
+
+      // ----- [Page 1] (1) 교수·학습의 방향 (가~차) -----
+      {
+        id: "tl-dir-ga",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(가) 일관성 있는 운영",
+        text: "수학과 교육과정에 제시된 성격, 목표, 내용 체계, 성취기준, 평가와 일관성을 가지도록 교수·학습을 운영한다.",
+        keywords: ["성격, 목표, 내용 체계, 성취기준, 평가", "일관성"]
+      },
+      {
+        id: "tl-dir-na",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(나) 핵심 아이디어 중심 통합",
+        text: "핵심 아이디어를 중심으로 수학의 지식·이해, 과정·기능, 가치·태도를 통합적으로 교수·학습하여 수학 교과 역량을 함양하고 수리 소양을 갖추게 한다.",
+        keywords: ["핵심 아이디어", "지식·이해, 과정·기능, 가치·태도", "통합적", "수학 교과 역량", "수리 소양"]
+      },
+      {
+        id: "tl-dir-da",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(다) 주도적 수학 학습",
+        text: "학생이 주도적으로 수학을 학습하여 수학과 교육과정에 제시된 목표를 달성하도록 교수·학습을 운영한다.",
+        keywords: ["주도적으로 수학을 학습", "목표를 달성"]
+      },
+      {
+        id: "tl-dir-ra",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(라) 도구 활용 및 소양 함양",
+        text: "수학 내용 특성에 적합한 교구나 공학 도구를 선택하여 효율적인 교수·학습이 이루어지도록 하고 학생들의 디지털 소양 함양을 도모한다. 그리고 수학 교과서 읽기, 수학 학습 과정과 결과 쓰기, 문장제 해결 등을 통해 학생들의 언어 소양 함양을 도모한다.",
+        keywords: ["디지털 소양", "수학 교과서 읽기", "과정과 결과 쓰기", "문장제 해결", "언어 소양"]
+      },
+      {
+        id: "tl-dir-ma",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(마) 내용 특성·여건·수준 고려",
+        text: "수학 내용의 특성, 학교 여건, 학생의 학습 능력과 수준 등을 고려하여 교수·학습을 운영한다.",
+        keywords: ["내용의 특성", "학교 여건", "학습 능력과 수준"]
+      },
+      {
+        id: "tl-dir-ba",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(바) 맞춤형 수업 및 기회 제공",
+        text: "학생 개인의 필요, 수학 학습 속도, 학습 능력 등을 고려하여 학생 맞춤형 수업을 실시하고 보충 학습과 심화 학습의 기회를 제공한다.",
+        keywords: ["학습 속도", "학생 맞춤형 수업", "보충 학습", "심화 학습"]
+      },
+      {
+        id: "tl-dir-sa",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(사) 범교과 학습 주제 활용",
+        text: "수학 교수·학습에서 범교과 학습 주제(안전·건강, 인성, 진로, 민주 시민, 인권, 다문화, 통일, 독도, 경제·금융, 환경·지속가능발전 등)를 현상이나 소재로 선택하여 활용할 수 있다.",
+        keywords: ["범교과 학습 주제", "현상이나 소재"]
+      },
+      {
+        id: "tl-dir-ah",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(아) 온라인 활용",
+        text: "사회적 환경, 학생의 요구, 수학 내용의 특성, 수업 방식 등에 따라 온라인을 활용한 교수·학습을 운영할 수 있다.",
+        keywords: ["온라인을 활용한 교수·학습"]
+      },
+      {
+        id: "tl-dir-ja",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(자) 학교급 전환 및 진로연계",
+        text: "학교급 전환에 따라 변화되는 수학 내용과 수업 방법을 파악하여 교수·학습에 적용하고, 진로연계교육에서 이를 고려한다.",
+        keywords: ["학교급 전환", "진로연계교육"]
+      },
+      {
+        id: "tl-dir-cha",
+        page: 1,
+        catId: "tl-dir",
+        catName: "교수·학습의 방향",
+        title: "(차) 교육과정 재구성",
+        text: "수학과 교수·학습 계획을 수립하거나 교수·학습 자료 개발 등을 할 때 교육과정을 재구성할 수 있다.",
+        keywords: ["교육과정을 재구성"]
+      },
+
+      // ----- [Page 1] (2) 교수·학습 방법 - (가) 교과 역량 함양 -----
+      {
+        id: "tl-mth-ga1",
+        page: 1,
+        catId: "tl-comp",
+        catName: "교수학습방법: 역량 함양",
+        title: "(가)-① 문제해결 역량 지도 방안",
+        text: "수학의 개념, 원리, 법칙을 이용하여 해결 가능한 문제를 학생에게 제시한다. 이때 다양한 방법으로 해결 가능한 문제, 여러 가지 해답이 나올 수 있는 문제 등을 활용할 수 있다. 문제에 주어진 조건과 정보를 분석하고 적절한 문제해결 계획을 수립하고 실행하며 문제해결 과정을 반성하도록 구체적인 발문과 권고를 제시한다. 문제해결 과정 및 결과의 의미를 재해석하여 주어진 문제를 변형하거나 새로운 문제를 만들어 해결하게 한다. 성공적인 문제해결 경험을 바탕으로 적극적이고 자신감 있게 문제해결에 참여하게 하고, 단번에 답이 나오지 않는 문제라도 끈기 있게 도전하여 성취감을 느끼게 한다.",
+        keywords: ["다양한 방법으로 해결 가능한 문제", "여러 가지 해답", "조건과 정보를 분석", "발문과 권고를 제시", "변형하거나 새로운 문제를 만들어", "끈기 있게 도전하여 성취감"]
+      },
+      {
+        id: "tl-mth-ga2",
+        page: 1,
+        catId: "tl-comp",
+        catName: "교수학습방법: 역량 함양",
+        title: "(가)-② 추론 역량 지도 방안",
+        text: "관찰, 실험, 측정 등 구체적 조작 활동을 통해 수학의 개념, 원리, 법칙에 흥미와 관심을 갖고 다양한 방법으로 탐구하고 이해하게 한다. 귀납, 유추 등의 개연적 추론을 통해 수학적 추측을 제기하고 정당화하며, 수학적 증거와 논리적 근거를 바탕으로 비판적으로 사고하는 태도를 갖게 한다. 수학의 개념, 원리, 법칙을 도출하는 과정과 수학적 절차를 논리적이고 체계적으로 수행하고 반성하게 한다.",
+        keywords: ["구체적 조작 활동", "귀납, 유추 등의 개연적 추론", "추측을 제기하고 정당화", "비판적으로 사고하는 태도", "체계적으로 수행하고 반성"]
+      },
+      {
+        id: "tl-mth-ga3",
+        page: 1,
+        catId: "tl-comp",
+        catName: "교수학습방법: 역량 함양",
+        title: "(가)-③ 의사소통 역량 지도 방안",
+        text: "수학 용어, 기호, 표, 그래프 등의 수학적 표현을 정확하게 사용하고 표현끼리 변환하게 한다. 학생이 자신의 사고와 전략을 수학적 표현으로 나타내고 설명하면서 수학적 표현의 편리함을 인식하게 한다. 학생 간 상호 작용과 질문이 활발한 교실 문화를 조성하고 수학적으로 의미 있는 의사소통이 이루어지도록 적절한 과제를 제시하고 안내한다. 수학적 아이디어에 대해 상호 작용하는 과정에서 타인을 배려하고 의견을 존중하는 태도를 기르게 한다.",
+        keywords: ["수학적 표현을 정확하게 사용", "표현끼리 변환", "편리함을 인식", "상호 작용과 질문이 활발한", "배려하고 의견을 존중"]
+      },
+      {
+        id: "tl-mth-ga4",
+        page: 1,
+        catId: "tl-comp",
+        catName: "교수학습방법: 역량 함양",
+        title: "(가)-④ 연결 역량 지도 방안",
+        text: "영역이나 학년(군) 내용 간에 관련된 수학의 개념, 원리, 법칙 등을 유기적으로 연계하여 새로운 지식을 생성하면서 창의성을 기르게 한다. 수학과 실생활, 사회 및 자연 현상, 타 교과의 내용을 연계하는 과제를 활용하여 수학의 유용성을 인식하게 한다.",
+        keywords: ["유기적으로 연계", "새로운 지식을 생성", "실생활, 사회 및 자연 현상, 타 교과", "유용성을 인식"]
+      },
+      {
+        id: "tl-mth-ga5",
+        page: 1,
+        catId: "tl-comp",
+        catName: "교수학습방법: 역량 함양",
+        title: "(가)-⑤ 정보처리 역량 지도 방안",
+        text: "실생활 및 수학적 문제 상황에서 자료를 탐색하고 수집하며 수학적으로 처리하여 합리적인 의사 결정을 하는 태도를 기르게 한다. 교구나 공학 도구를 활용하여 추상적인 수학 내용을 시각화하고 수학의 개념, 원리, 법칙에 대한 직관적 이해와 논리적 사고를 돕는다. 학생이 주도적으로 교구나 공학 도구를 활용하여 탐구하게 한다. 계산 기능 함양을 목표로 하지 않는 교수·학습 상황에서는 복잡한 계산을 할 때 공학 도구를 이용할 수 있게 한다.",
+        keywords: ["합리적인 의사 결정", "추상적인 수학 내용을 시각화", "직관적 이해와 논리적 사고", "계산 기능 함양을 목표로 하지 않는", "공학 도구를 이용"]
+      },
+
+      // ----- [Page 1] (2) 교수·학습 방법 - (나) 주도적 참여 분위기 조성 -----
+      {
+        id: "tl-mth-na",
+        page: 1,
+        catId: "tl-env",
+        catName: "교수학습방법: 주도적 참여 환경",
+        title: "(나) 주도적 참여 환경과 분위기 조성 (①~⑤)",
+        text: "① 수학 학습의 주체가 학생 자신임을 인식하고 수학 학습에 적극적으로 참여하도록 유도한다. ② 스스로 수학 학습 목표와 계획을 세우고 학습 결과를 평가하고 성찰하도록 안내한다. ③ 수학을 효과적으로 학습하는 방법을 탐색하고 자신의 학습 과정과 태도를 돌아보고 조절하는 자기주도적 학습 습관을 형성하도록 지도한다. ④ 교사 및 동료와 협력적 관계 속에서 수학 학습에 대한 조언과 의견을 경청하고 수용할 수 있도록 허용적인 분위기를 조성한다. ⑤ 수학 학습에 자신감을 가지고 실수가 배움의 기회임을 인식하며 끈기 있게 도전하도록 격려하고 지원한다.",
+        keywords: ["주체가 학생 자신", "목표와 계획을 세우고", "자기주도적 학습 습관", "허용적인 분위기", "실수가 배움의 기회", "끈기 있게 도전"]
+      },
+
+      // ----- [Page 1] (2) 교수·학습 방법 - (다) 7대 교수·학습 방안 -----
+      {
+        id: "tl-mth-da-all",
+        page: 1,
+        catId: "tl-models",
+        catName: "교수학습방법: 7대 수업 모형",
+        title: "(다) 7가지 교수·학습 방안 총람",
+        text: "① 설명식 교수는 교사가 설명과 시연을 통해 수업을 주도하는 교수·학습 방안으로, 수업 내용을 구조화하여 체계적으로 지도하는 데 효과적이다. 이때, 교사는 학생의 적극적인 수업 참여를 유도하고, 사고를 촉진하는 발문을 적절히 활용한다. ② 토의·토론 학습은 특정 주제에 대해 협의하거나 논의하는 교수·학습 방안으로, 학생들이 수학 내용을 폭넓게 이해하고 자신의 주장을 효과적으로 표현하고 다른 사람의 의견을 비판적 사고를 통해 수용하여 합리적으로 의사 결정하는 태도를 기를 수 있게 한다. ③ 협력 학습은 모둠 내의 상호 작용, 의사소통, 참여를 통해 공동의 학습 목표에 도달하도록 하는 교수·학습 방안으로, 다른 사람을 존중하고 배려하며 모둠 내의 역할을 수행하고 책임감을 기를 수 있게 한다. ④ 탐구 학습은 학생이 중심이 되어 수학의 개념, 원리, 법칙을 발견하고 구성하는 교수·학습 방안으로, 학생 스스로 자료와 정보로부터 지식을 도출하거나 지식의 타당성을 확인하는 것이 중요함을 알게 할 수 있다. ⑤ 프로젝트 학습은 학생 스스로 특정 주제나 과제를 탐구하고 해결하기 위해 계획을 수립하고 수행하여 결과물을 산출하고 공유하는 교수·학습 방안으로, 자기주도적으로 수학 지식과 경험을 통합하게 할 수 있다. ⑥ 수학적 모델링은 학생의 삶과 연계된 현상을 다양한 수학적 표현 방식을 이용하여 수학적 모델로 만들고 수학적 모델을 다시 실생활이나 사회 및 자연 현상에 적용하는 교수·학습 방안으로, 수학의 응용에 대한 넓은 안목을 갖게 할 수 있다. ⑦ 놀이 및 게임 학습은 호기심과 흥미를 유발하는 놀이 및 게임 활동을 활용하는 교수·학습 방안으로, 활동 속에서 수학 개념이나 원리를 탐구하고 동료와 경쟁 또는 협력하면서 자연스럽게 수학에 접근하고 수학 학습에 대한 자신감 및 의사소통 역량을 기르게 할 수 있다.",
+        keywords: ["설명과 시연", "사고를 촉진하는 발문", "협의하거나 논의", "비판적 사고를 통해 수용", "공동의 학습 목표", "발견하고 구성", "결과물을 산출하고 공유", "수학적 모델로 만들고", "놀이 및 게임 활동"]
+      },
+
+      // ----- [Page 1] (2) 교수·학습 방법 - (라)~(바) 맞춤형/연계/온라인 -----
+      {
+        id: "tl-mth-ra",
+        page: 1,
+        catId: "tl-etc",
+        catName: "교수학습방법: 맞춤형/연계/온라인",
+        title: "(라) 다양성 고려 맞춤형 지도 (①~③)",
+        text: "① 학생의 수학 학습 수준이나 사고방식의 차이를 존중하여 학생 개인에게 적합한 학습 과제를 선정하여 제시하고, 학생이 소재나 과정을 선택하고 구성할 수 있도록 수학 학습 활동을 설계한다. ② 학생의 시도와 성취에 대해 구체적으로 격려하고 칭찬하며, 동료 학생의 학습 수준이나 학습 결과에 대해 포용적인 교실 문화를 형성한다. ③ 학생의 수학 학습 과정과 결과를 점검하여 학생의 성장 발전을 지원하고, 이때 온라인 학습 관리 시스템을 활용할 수 있다.",
+        keywords: ["사고방식의 차이를 존중", "소재나 과정을 선택", "포용적인 교실 문화", "온라인 학습 관리 시스템"]
+      },
+      {
+        id: "tl-mth-ma",
+        page: 1,
+        catId: "tl-etc",
+        catName: "교수학습방법: 맞춤형/연계/온라인",
+        title: "(마) 범교과 및 타 교과 연계 (①~③)",
+        text: "① 범교과 학습 주제에 관심을 갖고 각종 자료와 정보를 수집하여 수학적으로 분석 및 해석하게 하고, 수학적 분석 결과에 근거하여 토의와 토론에 참여하게 한다. ② 가정, 학교, 지역사회와의 연계나 타 교과와의 연계를 고려하여 범교과 학습 주제에 대한 프로젝트를 수행할 수 있다. ③ 수학적 모델링을 활용하여 타 교과의 내용을 맥락으로 수학의 개념, 원리, 법칙 등을 다루는 연계 수업을 할 수 있다.",
+        keywords: ["수학적으로 분석 및 해석", "토의와 토론에 참여", "범교과 학습 주제에 대한 프로젝트", "수학적 모델링을 활용하여"]
+      },
+      {
+        id: "tl-mth-ba",
+        page: 1,
+        catId: "tl-etc",
+        catName: "교수학습방법: 맞춤형/연계/온라인",
+        title: "(바) 온라인 수학 교수·학습 유의사항 (①~④)",
+        text: "① 원격수업을 실시하는 경우, 학생의 특성과 학습 내용의 성격에 적합하고 안정적으로 운영할 수 있는 온라인 학습 플랫폼을 선택하여 수업 목표, 수업 내용, 수업 전략을 설계하고 운영한다. ② 학습 내용과 학생의 수준에 적합한 매체와 도구를 활용하여 학습의 효율성과 다양성을 도모한다. ③ 원격수업에서도 학생 참여형 수업이 이루어질 수 있도록 하고 적절한 조언과 발문을 통하여 학습 참여를 이끌어 낸다. ④ 온라인 교수·학습 자료를 활용할 때는 공표된 저작물의 출처를 명시하고 다른 누리집 등에 공유하지 않도록 안내한다.",
+        keywords: ["안정적으로 운영할 수 있는 온라인 학습 플랫폼", "매체와 도구를 활용", "학생 참여형 수업", "조언과 발문", "출처를 명시하고"]
+      },
+
+      // ----- [Page 2] (1) 평가의 방향 (가~자) -----
+      {
+        id: "eval-dir-ga-ja",
+        page: 2,
+        catId: "eval-dir",
+        catName: "평가의 방향 (가~자)",
+        title: "평가의 방향 전체 (가)~(자)",
+        text: "(가) 학생의 수학 학습에 대한 정보를 수집·활용하여 학생의 주도적 학습과 성장을 지원하고 교사의 수업 개선을 돕도록 지속적으로 평가를 실시한다. (나) 수학과 교육과정에 제시된 성격, 목표, 내용 체계, 성취기준, 교수·학습과 일관성을 가지도록 평가를 실시한다. (다) 학생의 수학 학습을 돕기 위해 수업과 평가를 통합하여 과정을 중시하는 평가를 실시한다. (라) 수학 내용 체계의 지식·이해, 과정·기능, 가치·태도를 학습 결과뿐 아니라 학습 과정에서 균형 있게 평가한다. (마) 학생이 평가 과정에 적극적으로 참여하고 스스로 설정한 수학 학습 목표에 대한 달성 여부를 점검할 수 있게 한다. (바) 학생의 사회·문화적 배경, 신체 특성 등이 불리하게 작용하지 않도록 평가를 실시하고, 학생의 사전 지식, 수학에 대한 흥미, 학습 유형, 학습 수준을 고려하여 평가 목적, 교수·학습 내용 및 방법에 따라 다양한 평가 방법을 적용한다. (사) 진단평가, 형성평가, 총괄평가 등을 적절히 활용하여 수학 학습 과정과 결과에 대한 구체적인 정보를 바탕으로 학생의 특성과 학습 결손을 파악하고 개별적 지원 방안을 마련한다. (아) 온라인 수학 수업에서 평가를 할 때 학습 환경 등의 외적 요소가 수학 학습 과정과 평가 결과에 영향을 미치지 않도록 한다. (자) 평가 절차를 개방적이고 공정하게 시행하고 학생의 수학 학습에 대한 의미 있는 정보를 학생, 학부모에게 제공한다.",
+        keywords: ["주도적 학습과 성장을 지원", "수업 개선을 돕도록", "일관성을 가지도록", "과정을 중시하는 평가", "학습 결과뿐 아니라 학습 과정에서 균형 있게", "불리하게 작용하지 않도록", "학습 결손을 파악하고 개별적 지원 방안", "외적 요소가", "개방적이고 공정하게"]
+      },
+
+      // ----- [Page 2] (2) 평가 방법 - (가) 과정중시 / (나) 교과역량평가 -----
+      {
+        id: "eval-mth-ga",
+        page: 2,
+        catId: "eval-mth",
+        catName: "평가 방법: 과정 및 역량",
+        title: "(가) 과정을 중시하는 평가 고려사항 (①~③)",
+        text: "① 성취기준을 중심으로 지식·이해, 과정·기능, 가치·태도 범주를 평가 요소로 구체화한다. ② 교수·학습과 연계하여 적절한 평가 도구와 준거를 개발하고 평가를 실시한다. ③ 평가 결과에 기반하여 학생의 학습 정보 및 수행 과정을 학생과 학부모에게 환류한다.",
+        keywords: ["성취기준을 중심으로", "평가 요소로 구체화", "평가 도구와 준거를 개발", "학습 정보 및 수행 과정", "환류한다"]
+      },
+      {
+        id: "eval-mth-na1",
+        page: 2,
+        catId: "eval-mth",
+        catName: "평가 방법: 과정 및 역량",
+        title: "(나)-① 문제해결 역량 평가 고려사항",
+        text: "문제해결 역량의 평가는 수학의 개념, 원리, 법칙을 문제 상황에 적절히 활용하는지, 주어진 조건과 정보를 분석하고 적절한 해결 전략을 탐색하여 해결하는지, 문제해결 과정을 돌아보며 절차에 따라 타당하게 결과를 얻어내고 이를 반성하는지, 적극적이고 자신감 있게 문제해결에 참여하는지, 적절한 방법을 찾기 위해 끈기 있게 도전하는지 등을 고려한다.",
+        keywords: ["개념, 원리, 법칙을 문제 상황에 적절히 활용", "조건과 정보를 분석하고", "해결 전략을 탐색", "타당하게 결과를 얻어내고 이를 반성", "적극적이고 자신감 있게", "끈기 있게 도전하는지"]
+      },
+      {
+        id: "eval-mth-na2",
+        page: 2,
+        catId: "eval-mth",
+        catName: "평가 방법: 과정 및 역량",
+        title: "(나)-② 추론 역량 평가 고려사항",
+        text: "추론 역량의 평가는 수학의 개념, 원리, 법칙을 이해하는지, 논리적으로 절차를 수행하는지, 수학적 지식을 다양한 방법으로 탐구하는지, 관찰에 근거하여 추측하고 일반화를 할 수 있는지, 추측의 근거를 제시하는지, 타당한 정당화를 하는지, 수학에 대한 흥미와 관심을 갖는지, 체계적으로 사고하려는 성향이 있는지, 수학적 증거와 논리적 근거를 바탕으로 비판적으로 사고하는 태도를 갖는지 등을 고려한다.",
+        keywords: ["논리적으로 절차를 수행", "다양한 방법으로 탐구", "추측하고 일반화를 할 수 있는지", "추측의 근거를 제시", "타당한 정당화", "비판적으로 사고하는 태도"]
+      },
+      {
+        id: "eval-mth-na3",
+        page: 2,
+        catId: "eval-mth",
+        catName: "평가 방법: 과정 및 역량",
+        title: "(나)-③ 의사소통 역량 평가 고려사항",
+        text: "의사소통 역량의 평가는 수학 용어, 기호, 표, 그래프 등 수학적 표현을 이해하고 정확하게 사용하는지, 적절한 수학적 표현을 선택할 수 있는지, 수학적 표현 간에 변환을 할 수 있는지, 수학적 아이디어나 수학 학습 과정 및 결과에 대해 표현하고 다른 사람의 견해를 이해하는지, 수학적 표현의 편리함을 인식하는지, 타인을 배려하고 의견을 존중하는지 등을 고려한다.",
+        keywords: ["수학적 표현을 이해하고 정확하게 사용", "적절한 수학적 표현을 선택", "표현 간에 변환", "다른 사람의 견해를 이해", "편리함을 인식", "타인을 배려하고 의견을 존중"]
+      },
+      {
+        id: "eval-mth-na4",
+        page: 2,
+        catId: "eval-mth",
+        catName: "평가 방법: 과정 및 역량",
+        title: "(나)-④ 연결 역량 평가 고려사항",
+        text: "연결 역량의 평가는 영역이나 학년(군) 내용 사이에서 개념, 원리, 법칙을 적절하게 관련지어 이해하는지, 수학의 개념, 원리, 법칙을 연계하여 새로운 지식을 생성할 수 있는지, 수학을 실생활이나 타 교과의 지식, 기능, 경험에 적용할 수 있는지, 실생활이나 타 교과의 지식, 기능, 경험을 수학적으로 해석할 수 있는지, 수학을 바탕으로 창의적으로 관련성을 찾을 수 있는지, 수학의 유용성을 인식하는지 등을 고려한다.",
+        keywords: ["적절하게 관련지어 이해", "새로운 지식을 생성", "실생활이나 타 교과의 지식, 기능, 경험에 적용", "수학적으로 해석", "창의적으로 관련성을 찾을 수 있는지", "유용성을 인식"]
+      },
+      {
+        id: "eval-mth-na5",
+        page: 2,
+        catId: "eval-mth",
+        catName: "평가 방법: 과정 및 역량",
+        title: "(나)-⑤ 정보처리 역량 평가 고려사항",
+        text: "정보처리 역량의 평가는 자료와 정보를 목적에 맞게 수집하고 변환하고 정리하는지, 자료를 바탕으로 도출한 결론이 적절한지, 교구나 공학 도구를 적절하게 활용하는지, 수학적 근거를 바탕으로 합리적으로 의사 결정하는 태도를 갖는지 등을 고려한다.",
+        keywords: ["목적에 맞게 수집하고 변환하고 정리", "도출한 결론이 적절한지", "교구나 공학 도구를 적절하게 활용", "합리적으로 의사 결정"]
+      },
+
+      // ----- [Page 2] (2) 평가 방법 - (다) 6대 평가 방안 / (라) 도구 / (마) 온라인 -----
+      {
+        id: "eval-mth-da-all",
+        page: 2,
+        catId: "eval-types",
+        catName: "평가 방법: 6대 평가 및 환경",
+        title: "(다) 6가지 다양한 평가 방안",
+        text: "① 지필평가는 수학 내용 체계의 지식·이해, 과정·기능을 평가하는 데 활용할 수 있고, 선택형, 단답형, 서·논술형 등의 다양한 문항 유형을 사용할 수 있다. ② 프로젝트 평가는 학생 스스로 특정 주제나 과제를 탐구하고 해결하기 위해 계획을 수립하고 수행하는 과정과 그 결과물을 평가하는 방안으로, 수학 내용 체계의 세 범주를 종합적으로 평가할 때 활용할 수 있다. ③ 포트폴리오 평가는 학생의 성장에 대한 정보를 얻기 위해 수학 학습 수행과 그 결과물을 일정 기간 수집하여 평가하는 방안으로, 수학 교과 역량의 발달을 종합적으로 평가할 때 활용할 수 있다. ④ 관찰 평가, 면담 평가, 구술 평가는 학생 개인 및 소집단을 관찰, 학생과의 질의응답, 학생의 발표를 통해 평가하는 방안으로, 학생의 사고 방법, 수행 과정, 수학 내용 체계의 가치·태도 등을 평가할 때 활용할 수 있다. ⑤ 자기 평가는 학생 스스로 자신의 학습 과정과 결과를 평가하는 방안으로, 수학 내용의 이해와 수행 과정, 문제해결과 추론 과정의 반성, 자신의 생각 표현, 수학 내용 체계의 가치·태도 등을 평가할 때 활용할 수 있다. ⑥ 동료 평가는 동료 학생들이 상대방을 서로 평가하는 방안으로, 협력 학습 상황에서 학생 개개인의 역할 수행이나 집단 활동의 기여를 평가할 때 활용할 수 있다.",
+        keywords: ["선택형, 단답형, 서·논술형", "세 범주를 종합적으로 평가", "일정 기간 수집하여", "역량의 발달을 종합적으로", "질의응답, 학생의 발표", "스스로 자신의 학습 과정과 결과", "상대방을 서로 평가"]
+      },
+      {
+        id: "eval-mth-ra",
+        page: 2,
+        catId: "eval-types",
+        catName: "평가 방법: 6대 평가 및 환경",
+        title: "(라) 교구나 공학 도구 활용 평가",
+        text: "① 성취기준의 도달 여부를 판단하는 데 교구나 공학 도구의 사용이 효과적인 경우 이를 활용한 평가를 실시할 수 있다. ② 교구나 공학 도구를 활용하여 평가할 때는 교구나 공학 도구의 기능 및 조작이 아닌 수학 내용의 탐구 과정을 평가한다.",
+        keywords: ["성취기준의 도달 여부", "기능 및 조작이 아닌", "수학 내용의 탐구 과정"]
+      },
+      {
+        id: "eval-mth-ma",
+        page: 2,
+        catId: "eval-types",
+        catName: "평가 방법: 6대 평가 및 환경",
+        title: "(마) 온라인 평가 유의사항",
+        text: "① 온라인 수학 학습에서는 학생의 활동에 근거한 구체적인 자료를 사용하여 평가한다. ② 온라인 학습 플랫폼이나 학습 관리 시스템을 이용하여 학생의 수행 과정을 관찰하고 개별 맞춤형으로 환류할 수 있다. ③ 학생의 접속 환경 미비로 인한 불참 시 기회 부여 등에 대해 방안을 마련하고 형평성의 문제가 제기되지 않도록 사전에 안내한다.",
+        keywords: ["구체적인 자료를 사용하여", "개별 맞춤형으로 환류", "기회 부여 등에 대해 방안을 마련", "형평성의 문제가 제기되지 않도록"]
+      }
+    ];
+
+    /* =====================================================================
+       Application State
+       ===================================================================== */
+    let currentCategory = "all";
+    let currentIndex = 0;
+    let currentMode = "study"; // 'study', 'firstchar', 'cloze', 'typing'
+    let clozeLevel = "medium"; // 'easy' (20%), 'medium' (45%), 'hard' (70%)
+    let bookmarks = new Set(JSON.parse(localStorage.getItem("math2022_bookmarks") || "[]"));
+    let masteredItems = new Set(JSON.parse(localStorage.getItem("math2022_mastered") || "[]"));
+    let bookmarkFilterOnly = false;
+    let hideStudyText = false;
+
+    // Categories
+    const categories = [
+      { id: "all", name: "전체 항목 (1·2페이지)", count: curriculumData.length },
+      { id: "target", name: "2022 수학과 목표 (p.1)", count: curriculumData.filter(d => d.catId === "target").length },
+      { id: "tl-dir", name: "교수·학습의 방향 (p.1)", count: curriculumData.filter(d => d.catId === "tl-dir").length },
+      { id: "tl-comp", name: "교수학습방법: 5대 역량 (p.1)", count: curriculumData.filter(d => d.catId === "tl-comp").length },
+      { id: "tl-env", name: "교수학습방법: 주도적 참여 (p.1)", count: curriculumData.filter(d => d.catId === "tl-env").length },
+      { id: "tl-models", name: "교수학습방법: 7대 수업모형 (p.1)", count: curriculumData.filter(d => d.catId === "tl-models").length },
+      { id: "tl-etc", name: "교수학습방법: 맞춤·연계·온라인 (p.1)", count: curriculumData.filter(d => d.catId === "tl-etc").length },
+      { id: "eval-dir", name: "평가의 방향 (가~자) (p.2)", count: curriculumData.filter(d => d.catId === "eval-dir").length },
+      { id: "eval-mth", name: "평가방법: 과정 및 5대 역량 (p.2)", count: curriculumData.filter(d => d.catId === "eval-mth").length },
+      { id: "eval-types", name: "평가방법: 6대 평가 및 환경 (p.2)", count: curriculumData.filter(d => d.catId === "eval-types").length },
+    ];
+
+    /* =====================================================================
+       Init & Rendering
+       ===================================================================== */
+    window.onload = function() {
+      renderCategories();
+      updateFilteredItemList();
+      renderCurrentItem();
+      updateHeaderStats();
+
+      // Keyboard shortcuts
+      document.addEventListener('keydown', (e) => {
+        if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA') {
+          if (e.altKey && e.key === 'Enter') {
+            e.preventDefault();
+            checkTypingTest();
+          }
+          return;
+        }
+
+        if (e.altKey && e.key === 'ArrowRight') {
+          e.preventDefault();
+          nextItem();
+        } else if (e.altKey && e.key === 'ArrowLeft') {
+          e.preventDefault();
+          prevItem();
+        } else if (e.key === ' ' || e.code === 'Space') {
+          e.preventDefault();
+          if (currentMode === 'study') {
+            toggleHideStudy();
+          } else if (currentMode === 'cloze' || currentMode === 'firstchar') {
+            revealAllAnswers();
+          }
+        }
+      });
+    };
+
+    function updateHeaderStats() {
+      document.getElementById('mastered-count').innerText = masteredItems.size;
+      document.getElementById('total-count').innerText = curriculumData.length;
+    }
+
+    function renderCategories() {
+      const catListEl = document.getElementById('category-list');
+      catListEl.innerHTML = categories.map(cat => {
+        const isActive = currentCategory === cat.id;
+        return `
+          <button onclick="selectCategory('${cat.id}')" class="w-full text-left px-3 py-2 rounded-xl text-xs font-semibold flex items-center justify-between transition ${
+            isActive ? 'bg-indigo-600 text-white shadow-sm' : 'hover:bg-slate-100 text-slate-700'
+          }">
+            <span class="truncate">${cat.name}</span>
+            <span class="text-[10px] px-2 py-0.5 rounded-full ${isActive ? 'bg-indigo-700 text-indigo-100' : 'bg-slate-200 text-slate-600'}">${cat.count}</span>
+          </button>
+        `;
+      }).join('');
+    }
+
+    function getFilteredItems() {
+      return curriculumData.filter(item => {
+        const matchesCategory = currentCategory === 'all' || item.catId === currentCategory;
+        const matchesBookmark = !bookmarkFilterOnly || bookmarks.has(item.id);
+        return matchesCategory && matchesBookmark;
+      });
+    }
+
+    function updateFilteredItemList() {
+      const items = getFilteredItems();
+      const listEl = document.getElementById('subitem-list');
+      const countEl = document.getElementById('section-item-count');
+      const currentCatObj = categories.find(c => c.id === currentCategory);
+      document.getElementById('current-section-title').innerText = currentCatObj ? currentCatObj.name : '항목';
+      countEl.innerText = `${items.length} 항목`;
+
+      if (items.length === 0) {
+        listEl.innerHTML = `<div class="text-xs text-slate-400 py-6 text-center">해당 조건의 문항이 없습니다.</div>`;
+        return;
+      }
+
+      listEl.innerHTML = items.map((item, idx) => {
+        const isSelected = getFilteredItems()[currentIndex]?.id === item.id;
+        const isMastered = masteredItems.has(item.id);
+        const isBookmarked = bookmarks.has(item.id);
+
+        return `
+          <div onclick="selectItemById('${item.id}')" class="cursor-pointer p-2 rounded-xl text-xs flex items-center justify-between transition border ${
+            isSelected 
+              ? 'bg-indigo-50 border-indigo-300 text-indigo-950 font-bold' 
+              : 'hover:bg-slate-50 border-transparent text-slate-700'
+          }">
+            <div class="flex items-center gap-1.5 truncate pr-2">
+              <span class="text-[10px] w-4 text-slate-400">${idx + 1}.</span>
+              <span class="truncate">${item.title}</span>
+            </div>
+            <div class="flex items-center gap-1 shrink-0">
+              ${isBookmarked ? '<i class="fa-solid fa-star text-[10px] text-amber-500"></i>' : ''}
+              ${isMastered ? '<i class="fa-solid fa-circle-check text-[11px] text-emerald-500"></i>' : '<i class="fa-regular fa-circle text-[11px] text-slate-300"></i>'}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function selectCategory(catId) {
+      currentCategory = catId;
+      currentIndex = 0;
+      renderCategories();
+      updateFilteredItemList();
+      renderCurrentItem();
+    }
+
+    function selectItemById(id) {
+      const items = getFilteredItems();
+      const targetIdx = items.findIndex(it => it.id === id);
+      if (targetIdx !== -1) {
+        currentIndex = targetIdx;
+        updateFilteredItemList();
+        renderCurrentItem();
+      }
+    }
+
+    function nextItem() {
+      const items = getFilteredItems();
+      if (items.length === 0) return;
+      if (currentIndex < items.length - 1) {
+        currentIndex++;
+      } else {
+        currentIndex = 0; // loop
+      }
+      updateFilteredItemList();
+      renderCurrentItem();
+    }
+
+    function prevItem() {
+      const items = getFilteredItems();
+      if (items.length === 0) return;
+      if (currentIndex > 0) {
+        currentIndex--;
+      } else {
+        currentIndex = items.length - 1;
+      }
+      updateFilteredItemList();
+      renderCurrentItem();
+    }
+
+    function toggleBookmarkFilter() {
+      bookmarkFilterOnly = !bookmarkFilterOnly;
+      const btn = document.getElementById('btn-toggle-bookmark-only');
+      if (bookmarkFilterOnly) {
+        btn.classList.add('bg-amber-500', 'text-slate-900', 'font-bold');
+        btn.classList.remove('bg-indigo-800', 'text-indigo-200');
+      } else {
+        btn.classList.remove('bg-amber-500', 'text-slate-900', 'font-bold');
+        btn.classList.add('bg-indigo-800', 'text-indigo-200');
+      }
+      currentIndex = 0;
+      updateFilteredItemList();
+      renderCurrentItem();
+    }
+
+    function toggleCurrentBookmark() {
+      const items = getFilteredItems();
+      if (items.length === 0) return;
+      const curItem = items[currentIndex];
+      if (bookmarks.has(curItem.id)) {
+        bookmarks.delete(curItem.id);
+      } else {
+        bookmarks.add(curItem.id);
+      }
+      localStorage.setItem("math2022_bookmarks", JSON.stringify(Array.from(bookmarks)));
+      renderBookmarkButton();
+      updateFilteredItemList();
+    }
+
+    function renderBookmarkButton() {
+      const items = getFilteredItems();
+      if (items.length === 0) return;
+      const curItem = items[currentIndex];
+      const btnStar = document.getElementById('btn-star');
+      if (bookmarks.has(curItem.id)) {
+        btnStar.classList.add('text-amber-500');
+        btnStar.classList.remove('text-slate-300');
+      } else {
+        btnStar.classList.remove('text-amber-500');
+        btnStar.classList.add('text-slate-300');
+      }
+    }
+
+    function markAsMastered() {
+      const items = getFilteredItems();
+      if (items.length === 0) return;
+      const curItem = items[currentIndex];
+      if (masteredItems.has(curItem.id)) {
+        masteredItems.delete(curItem.id);
+      } else {
+        masteredItems.add(curItem.id);
+      }
+      localStorage.setItem("math2022_mastered", JSON.stringify(Array.from(masteredItems)));
+      updateMasteredButton();
+      updateHeaderStats();
+      updateFilteredItemList();
+    }
+
+    function updateMasteredButton() {
+      const items = getFilteredItems();
+      if (items.length === 0) return;
+      const curItem = items[currentIndex];
+      const btnCheck = document.getElementById('btn-check');
+      if (masteredItems.has(curItem.id)) {
+        btnCheck.classList.remove('text-slate-600', 'border-slate-300');
+        btnCheck.classList.add('bg-emerald-500', 'text-white', 'border-emerald-500');
+        btnCheck.innerHTML = `<i class="fa-solid fa-circle-check"></i> <span>암기 완료됨</span>`;
+      } else {
+        btnCheck.classList.add('text-slate-600', 'border-slate-300');
+        btnCheck.classList.remove('bg-emerald-500', 'text-white', 'border-emerald-500');
+        btnCheck.innerHTML = `<i class="fa-regular fa-circle-check"></i> <span>암기 완료 표시</span>`;
+      }
+    }
+
+    function resetAllProgress() {
+      if (confirm("암기 완료 및 북마크 진도를 모두 초기화하시겠습니까?")) {
+        masteredItems.clear();
+        bookmarks.clear();
+        localStorage.removeItem("math2022_mastered");
+        localStorage.removeItem("math2022_bookmarks");
+        updateHeaderStats();
+        updateFilteredItemList();
+        renderCurrentItem();
+      }
+    }
+
+    /* =====================================================================
+       Mode Switching & View Rendering
+       ===================================================================== */
+    function setMode(mode) {
+      currentMode = mode;
+      document.querySelectorAll('.mode-btn').forEach(b => {
+        b.classList.remove('bg-indigo-600', 'text-white', 'shadow');
+        b.classList.add('text-indigo-200');
+      });
+      const activeBtn = document.getElementById(`mode-${mode}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('text-indigo-200');
+        activeBtn.classList.add('bg-indigo-600', 'text-white', 'shadow');
+      }
+
+      renderSubControls();
+      renderCurrentItem();
+    }
+
+    function renderSubControls() {
+      const ctrl = document.getElementById('mode-sub-controls');
+      ctrl.innerHTML = '';
+
+      if (currentMode === 'study') {
+        ctrl.innerHTML = `
+          <button onclick="toggleHideStudy()" class="px-2.5 py-1 bg-indigo-800 hover:bg-indigo-700 text-indigo-100 rounded-lg text-xs font-medium flex items-center gap-1.5 transition">
+            <i class="fa-solid ${hideStudyText ? 'fa-eye' : 'fa-eye-slash'}"></i>
+            <span>${hideStudyText ? '문장 보이기' : '문장 가리기'}</span>
+          </button>
+        `;
+      } else if (currentMode === 'cloze') {
+        ctrl.innerHTML = `
+          <div class="flex items-center gap-1.5">
+            <span class="text-indigo-300 text-[11px] font-semibold">빈칸 난이도:</span>
+            <div class="inline-flex bg-indigo-950 p-0.5 rounded-lg border border-indigo-700/60 shadow-inner">
+              <button onclick="setClozeLevel('easy')" class="px-2.5 py-1 text-xs rounded-md font-semibold transition ${clozeLevel==='easy'?'bg-emerald-500 text-white shadow':'text-indigo-200 hover:text-white'}">
+                초급 (20%)
+              </button>
+              <button onclick="setClozeLevel('medium')" class="px-2.5 py-1 text-xs rounded-md font-semibold transition ${clozeLevel==='medium'?'bg-amber-500 text-slate-950 font-bold shadow':'text-indigo-200 hover:text-white'}">
+                중급 (45%)
+              </button>
+              <button onclick="setClozeLevel('hard')" class="px-2.5 py-1 text-xs rounded-md font-semibold transition ${clozeLevel==='hard'?'bg-rose-500 text-white font-bold shadow':'text-indigo-200 hover:text-white'}">
+                고급 (75%)
+              </button>
+            </div>
+            <button onclick="revealAllAnswers()" class="ml-1 px-2.5 py-1 bg-indigo-800 hover:bg-indigo-700 text-indigo-100 rounded-lg text-xs font-medium transition flex items-center gap-1">
+              <i class="fa-solid fa-key text-[10px]"></i> 정답 보기
+            </button>
+          </div>
+        `;
+      } else if (currentMode === 'firstchar') {
+        ctrl.innerHTML = `
+          <button onclick="revealAllAnswers()" class="px-2.5 py-1 bg-indigo-800 hover:bg-indigo-700 text-indigo-100 rounded-lg text-xs transition">전체 정답 보기</button>
+        `;
+      }
+    }
+
+    function setClozeLevel(lvl) {
+      clozeLevel = lvl;
+      renderSubControls();
+      renderCurrentItem();
+    }
+
+    function toggleHideStudy() {
+      hideStudyText = !hideStudyText;
+      renderSubControls();
+      renderCurrentItem();
+    }
+
+    /* =====================================================================
+       Current Item Master Render
+       ===================================================================== */
+    function renderCurrentItem() {
+      const items = getFilteredItems();
+      const viewport = document.getElementById('learning-viewport');
+
+      if (items.length === 0) {
+        viewport.innerHTML = `
+          <div class="flex flex-col items-center justify-center h-64 text-slate-400">
+            <i class="fa-solid fa-folder-open text-4xl mb-3"></i>
+            <p class="text-sm">선택된 조건에 해당하는 문항이 없습니다.</p>
+          </div>
+        `;
+        return;
+      }
+
+      if (currentIndex >= items.length) currentIndex = 0;
+      const item = items[currentIndex];
+
+      // Update Header Card info
+      document.getElementById('badge-page').innerText = `${item.page}페이지`;
+      document.getElementById('badge-cat').innerText = item.catName;
+      document.getElementById('badge-num').innerText = `#${currentIndex + 1}/${items.length}`;
+      document.getElementById('current-item-title').innerText = item.title;
+      document.getElementById('current-item-path').innerText = `${item.catName} > ${item.title}`;
+
+      renderBookmarkButton();
+      updateMasteredButton();
+
+      // Render Viewport by Mode
+      switch (currentMode) {
+        case 'study':
+          renderStudyMode(item, viewport);
+          break;
+        case 'firstchar':
+          renderFirstCharMode(item, viewport);
+          break;
+        case 'cloze':
+          renderClozeMode(item, viewport);
+          break;
+        case 'typing':
+          renderTypingMode(item, viewport);
+          break;
+      }
+    }
+
+    /* -------------------------------------------------------------
+       Mode 1: 정독 및 블라인드 (Study & Hide)
+       ------------------------------------------------------------- */
+    function renderStudyMode(item, container) {
+      let highlighted = item.text;
+      item.keywords.forEach(kw => {
+        const reg = new RegExp(`(${kw.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')})`, 'g');
+        highlighted = highlighted.replace(reg, `<mark class="bg-amber-100 text-amber-900 font-semibold px-1 rounded">$1</mark>`);
+      });
+
+      container.innerHTML = `
+        <div class="flex-1 flex flex-col justify-center">
+          <div class="mb-4 flex items-center justify-between text-xs text-slate-500 font-semibold border-b pb-2">
+            <span><i class="fa-regular fa-eye mr-1"></i> 원문 정독 (클릭하여 핵심 키워드 확인)</span>
+            <span class="text-slate-400">원문 글자 수: ${item.text.length}자</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 transition-all cursor-pointer relative" onclick="toggleHideStudy()">
+            ${
+              hideStudyText
+                ? `<div class="py-12 text-center text-slate-400 select-none">
+                     <i class="fa-solid fa-lock text-3xl mb-2 text-indigo-400"></i>
+                     <p class="font-bold text-slate-600">내용이 가려져 있습니다.</p>
+                     <p class="text-xs text-slate-400 mt-1">이 영역을 클릭하거나 스페이스바를 누르면 원문이 표시됩니다.</p>
+                   </div>`
+                : `<div class="text-base sm:text-lg leading-relaxed sm:leading-loose text-slate-800 font-medium select-text">
+                     ${highlighted}
+                   </div>`
+            }
+          </div>
+
+          <!-- Keywords pill box -->
+          <div class="mt-6">
+            <h4 class="text-xs font-bold text-slate-400 uppercase tracking-wider mb-2">핵심 인출 키워드 체크리스트</h4>
+            <div class="flex flex-wrap gap-2">
+              ${item.keywords.map(kw => `
+                <span class="text-xs bg-indigo-50 border border-indigo-200 text-indigo-800 px-3 py-1 rounded-lg font-medium flex items-center gap-1.5">
+                  <i class="fa-solid fa-check text-[10px] text-indigo-500"></i> ${kw}
+                </span>
+              `).join('')}
+            </div>
+          </div>
+        </div>
+      `;
+    }
+
+    /* -------------------------------------------------------------
+       Mode 2: 초성/첫 글자 연상 모드 (First-Letter Prompt)
+       ------------------------------------------------------------- */
+    function renderFirstCharMode(item, container) {
+      // Split into words, show only the first letter or character, rest replaced with dots or hidden
+      const words = item.text.split(/(\s+)/);
+      const promptHtml = words.map((w, idx) => {
+        if (/^\s+$/.test(w)) return w; // preserves spaces
+        const firstChar = w.charAt(0);
+        const remainder = w.slice(1);
+        return `<span class="inline-block mx-0.5 group cursor-pointer" onclick="this.querySelector('.rest').classList.toggle('hidden')">
+          <span class="font-bold text-indigo-600 bg-indigo-50 px-1 py-0.5 rounded border border-indigo-200">${firstChar}</span><span class="rest text-slate-400 border-b border-dashed border-slate-300 hidden">${remainder}</span><span class="text-slate-300 text-xs tracking-widest">${'_'.repeat(Math.min(remainder.length, 3))}</span>
+        </span>`;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="flex-1 flex flex-col justify-center">
+          <div class="mb-3 flex items-center justify-between text-xs text-slate-500 border-b pb-2 font-semibold">
+            <span><i class="fa-solid fa-font text-indigo-500 mr-1"></i> 첫 글자(어절 두문자) 힌트 암기</span>
+            <span class="text-indigo-600">각 어절을 클릭하면 숨겨진 글자가 열립니다.</span>
+          </div>
+
+          <div class="p-6 rounded-2xl bg-slate-50 border border-slate-200 min-h-[160px] text-base sm:text-lg leading-relaxed select-none">
+            ${promptHtml}
+          </div>
+
+          <div id="firstchar-answer" class="mt-4 p-4 rounded-xl bg-indigo-50/50 border border-indigo-100 hidden">
+            <span class="text-xs font-bold text-indigo-800 block mb-1">원문 전체 확인:</span>
+            <p class="text-sm text-slate-700 leading-relaxed">${item.text}</p>
+          </div>
+        </div>
+      `;
+    }
+
+    /* -------------------------------------------------------------
+       Mode 3: 단계별 빈칸 채우기 (Cloze Test)
+       ------------------------------------------------------------- */
+    function renderClozeMode(item, container) {
+      // 난이도별 빈칸 비율 및 설명
+      const config = {
+        easy: { ratio: 0.20, label: '초급 (핵심 키워드 위주 20%)', badgeClass: 'bg-emerald-100 text-emerald-800 border-emerald-300' },
+        medium: { ratio: 0.45, label: '중급 (핵심구 + 주요서술어 45%)', badgeClass: 'bg-amber-100 text-amber-800 border-amber-300' },
+        hard: { ratio: 0.75, label: '고급 (조사 제외 거의 전체 75%)', badgeClass: 'bg-rose-100 text-rose-800 border-rose-300' }
+      };
+      const curConfig = config[clozeLevel] || config.medium;
+
+      // 정규식으로 어절 및 공백 분리
+      const tokens = item.text.match(/\S+|\s+/g) || [];
+
+      // 단어 인덱스 목록 (공백 제외)
+      const wordIndices = [];
+      tokens.forEach((tok, idx) => {
+        if (!/^\s+$/.test(tok)) {
+          wordIndices.push(idx);
+        }
+      });
+
+      // 단어가 기호(①, (가) 등)로만 되어있는지 체크
+      const isSymbolOnly = (str) => /^[①-⑩\(\)\[\]가-하0-9\.\,\·\-\s]+$/.test(str);
+
+      // 빈칸 후보 선정 (기호 단독이 아닌 단어)
+      const candidates = wordIndices.filter(idx => {
+        const word = tokens[idx].trim();
+        return word.length > 0 && !isSymbolOnly(word);
+      });
+
+      // 확실한 차이를 위한 목표 빈칸 수 계산 (최소 1개, 최대 candidates 길이)
+      const targetCount = Math.max(1, Math.min(candidates.length, Math.round(candidates.length * curConfig.ratio)));
+
+      // 키워드 어절 점수 매기기 (초급/중급 시 우선 선별)
+      const keywordSet = (item.keywords || []).map(k => k.replace(/[.,·()]/g, '').trim()).filter(Boolean);
+      
+      const scoredCandidates = candidates.map((idx, pos) => {
+        const cleanWord = tokens[idx].replace(/[.,·()①-⑩]/g, '').trim();
+        let score = 0;
+        // 키워드 일치 점수
+        keywordSet.forEach(kw => {
+          if (kw.includes(cleanWord) || cleanWord.includes(kw)) {
+            score += 10;
+          }
+        });
+        // 단어 길이가 길수록 우선순위
+        score += Math.min(cleanWord.length, 6);
+        return { idx, pos, score, cleanWord };
+      });
+
+      const selectedIndices = new Set();
+
+      if (clozeLevel === 'easy') {
+        // 초급: 가장 중요한 키워드 어절 상위권에서 균일하게 분산 선택
+        scoredCandidates.sort((a, b) => b.score - a.score);
+        const topPool = scoredCandidates.slice(0, Math.max(targetCount, Math.round(candidates.length * 0.4)));
+        // 자연스러운 간격 유지를 위해 위치 순으로 재정렬 후 간격 선택
+        topPool.sort((a, b) => a.pos - b.pos);
+        const step = Math.max(1, Math.floor(topPool.length / targetCount));
+        for (let i = 0; i < topPool.length && selectedIndices.size < targetCount; i += step) {
+          selectedIndices.add(topPool[i].idx);
+        }
+        // 부족분 채우기
+        for (let i = 0; i < topPool.length && selectedIndices.size < targetCount; i++) {
+          selectedIndices.add(topPool[i].idx);
+        }
+      } else if (clozeLevel === 'medium') {
+        // 중급: 45% 내외로 고르게 빈칸 배치 (키워드 + 문맥 단어 교차)
+        const step = candidates.length / targetCount;
+        for (let i = 0; i < targetCount; i++) {
+          const pickIndex = Math.min(candidates.length - 1, Math.floor(i * step));
+          selectedIndices.add(candidates[pickIndex]);
+        }
+      } else {
+        // 고급: 75% 대폭 뚫기 (연속된 기호류 제외하고 거의 다 뚫음)
+        // 4개 중 3개 꼴로 빈칸 설정
+        candidates.forEach((candIdx, pos) => {
+          if (selectedIndices.size < targetCount) {
+            // 4단어 중 3개 선택 (pos % 4 !== 3)
+            if (pos % 4 !== 3 || selectedIndices.size + (candidates.length - pos) <= targetCount) {
+              selectedIndices.add(candIdx);
+            }
+          }
+        });
+        // 여전히 부족하면 남은 후보 모두 채움
+        for (let i = 0; i < candidates.length && selectedIndices.size < targetCount; i++) {
+          selectedIndices.add(candidates[i]);
+        }
+      }
+
+      // 안전망: 만약 모종의 이유로 아무것도 선택되지 않았다면 첫 번째 유효 단어 강제 선택
+      if (selectedIndices.size === 0 && candidates.length > 0) {
+        selectedIndices.add(candidates[0]);
+      }
+
+      let blankCounter = 0;
+      const htmlOutput = tokens.map((tok) => {
+        if (/^\s+$/.test(tok)) {
+          return tok; // 공백 보존
+        }
+
+        const tokenIdx = tokens.indexOf(tok);
+        // 복수 매칭 방지를 위해 selectedIndices 확인
+        if (!selectedIndices.has(tokenIdx)) {
+          return `<span class="text-slate-800 font-semibold">${escapeHtml(tok)}</span>`;
+        }
+
+        blankCounter++;
+        // 앞/뒤 구두점(괄호, 마침표, 쉼표 등) 분리
+        const match = tok.match(/^([(\[{]*)(\S+?)([)\]}.,;·]*)$/);
+        const prefix = match ? match[1] : '';
+        const core = match ? match[2] : tok;
+        const suffix = match ? match[3] : '';
+
+        // 입력창 너비 계산
+        const inputWidth = Math.max(65, Math.min(230, core.length * 18 + 24));
+        const hintChar = core.length > 0 ? core.charAt(0) : '';
+
+        return `${prefix}<span class="inline-flex items-center mx-1 my-1 align-baseline relative group">
+          <input type="text"
+                 data-answer="${escapeHtml(core)}"
+                 data-index="${blankCounter}"
+                 id="cloze-input-${blankCounter}"
+                 style="width: ${inputWidth}px"
+                 class="cloze-input text-center text-sm font-bold border-2 border-indigo-400 bg-amber-50/70 rounded-lg px-2 py-1 text-indigo-950 focus:outline-none focus:border-indigo-600 focus:bg-white focus:ring-2 focus:ring-indigo-300 transition shadow-sm placeholder:text-indigo-400 placeholder:font-normal"
+                 placeholder="${core.length}자"
+                 title="힌트: 첫 글자는 '${hintChar}' 입니다"
+                 autocomplete="off"
+                 oninput="checkClozeIndividual(this)" />
+        </span>${suffix}`;
+      }).join('');
+
+      container.innerHTML = `
+        <div class="flex-1 flex flex-col justify-between">
+          <div>
+            <!-- Cloze Status Header -->
+            <div class="mb-4 flex flex-wrap items-center justify-between gap-2 border-b pb-3 text-xs">
+              <div class="flex items-center gap-2">
+                <span class="px-2.5 py-1 rounded-full text-xs font-bold border ${curConfig.badgeClass}">
+                  ${curConfig.label}
+                </span>
+                <span class="font-bold text-slate-700">
+                  빈칸 총 <span class="text-indigo-600 font-extrabold text-sm">${blankCounter}</span> / ${candidates.length} 어절
+                </span>
+              </div>
+              <div class="flex items-center gap-2 text-slate-500">
+                <span class="hidden sm:inline text-[11px]"><i class="fa-regular fa-lightbulb text-amber-500 mr-1"></i>빈칸에 마우스를 올리면 첫 글자 힌트가 뜹니다.</span>
+                <button onclick="revealAllAnswers()" class="text-xs text-indigo-600 hover:text-indigo-800 font-bold underline cursor-pointer">
+                  전체 정답 확인
+                </button>
+              </div>
+            </div>
+
+            <!-- Cloze Text Body -->
+            <div class="p-6 sm:p-7 rounded-2xl bg-slate-50 border border-slate-200 min-h-[220px] text-base sm:text-lg leading-loose select-none">
+              ${htmlOutput}
+            </div>
+          </div>
+
+          <!-- Cloze Answer Full Panel -->
+          <div id="cloze-answer-panel" class="mt-4 p-4 rounded-xl bg-indigo-50/90 border border-indigo-200 hidden">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-indigo-900 flex items-center gap-1.5">
+                <i class="fa-solid fa-circle-check text-emerald-600"></i> 원문 전체 확인:
+              </span>
+              <button onclick="document.getElementById('cloze-answer-panel').classList.add('hidden')" class="text-xs text-indigo-600 hover:text-indigo-900 font-bold">
+                ✕ 닫기
+              </button>
+            </div>
+            <p class="text-sm text-slate-800 leading-relaxed font-sans select-text">${escapeHtml(item.text)}</p>
+          </div>
+        </div>
+      `;
+
+      // 첫 번째 빈칸으로 자동 포커스
+      setTimeout(() => {
+        const firstInput = container.querySelector('.cloze-input');
+        if (firstInput) firstInput.focus();
+      }, 50);
+    }
+
+    function checkClozeIndividual(inputEl) {
+      const target = (inputEl.dataset.answer || '').trim();
+      const val = inputEl.value.trim();
+
+      if (val === target) {
+        inputEl.classList.remove('border-indigo-400', 'border-rose-400', 'bg-amber-50/70', 'bg-rose-50');
+        inputEl.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-800');
+        // 다음 빈칸으로 자동 포커스 이동 편의 제공
+        const nextId = parseInt(inputEl.dataset.index || '0') + 1;
+        const nextInput = document.getElementById(`cloze-input-${nextId}`);
+        if (nextInput) {
+          nextInput.focus();
+        }
+      } else if (val.length >= target.length && val !== target) {
+        inputEl.classList.add('border-rose-400', 'bg-rose-50');
+        inputEl.classList.remove('border-emerald-500', 'bg-emerald-50', 'text-emerald-800');
+      } else {
+        inputEl.classList.remove('border-emerald-500', 'bg-emerald-50', 'text-emerald-800', 'border-rose-400', 'bg-rose-50');
+        inputEl.classList.add('border-indigo-400', 'bg-amber-50/70');
+      }
+    }
+
+    function revealAllAnswers() {
+      if (currentMode === 'firstchar') {
+        const box = document.getElementById('firstchar-answer');
+        if (box) box.classList.toggle('hidden');
+      } else if (currentMode === 'cloze') {
+        document.querySelectorAll('.cloze-input').forEach(input => {
+          input.value = input.dataset.answer;
+          input.classList.remove('border-indigo-300', 'border-rose-400');
+          input.classList.add('border-emerald-500', 'bg-emerald-50', 'text-emerald-800');
+        });
+        const box = document.getElementById('cloze-answer-panel');
+        if (box) box.classList.toggle('hidden');
+      }
+    }
+
+    /* -------------------------------------------------------------
+       Mode 4: 백지 인출 & 정밀 대조기 (Typing & Precise Diff Engine)
+       ------------------------------------------------------------- */
+    function renderTypingMode(item, container) {
+      container.innerHTML = `
+        <div class="flex-1 flex flex-col">
+          <div class="mb-3 flex items-center justify-between text-xs text-slate-500 border-b pb-2 font-semibold">
+            <span class="flex items-center gap-1.5 text-indigo-700">
+              <i class="fa-solid fa-keyboard"></i>
+              <span>백지 인출 (토시 하나 틀리지 않게 암기하여 입력하세요)</span>
+            </span>
+            <span class="text-slate-400">원문 ${item.text.length}자</span>
+          </div>
+
+          <div class="grid grid-cols-1 gap-4 flex-1">
+            <textarea id="typing-input" rows="6" class="w-full p-4 rounded-xl border-2 border-slate-300 focus:border-indigo-600 focus:ring-4 focus:ring-indigo-100 font-medium text-base text-slate-800 placeholder-slate-400 transition resize-none custom-scrollbar" placeholder="이곳에 원문을 기억나는 대로 토시 하나 틀리지 않게 타이핑하세요... (완료 후 [정밀 대조 및 채점] 클릭)"></textarea>
+
+            <div class="flex flex-wrap items-center justify-between gap-3">
+              <div class="flex items-center gap-2">
+                <button onclick="checkTypingTest()" class="px-5 py-2.5 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition shadow flex items-center gap-2">
+                  <i class="fa-solid fa-spell-check"></i>
+                  <span>정밀 대조 및 채점 (Alt+Enter)</span>
+                </button>
+                <button onclick="fillOriginalToInput()" class="px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-600 text-xs font-semibold rounded-xl transition">
+                  원문 불러오기
+                </button>
+              </div>
+
+              <div id="diff-score-badge" class="hidden text-xs font-bold px-3 py-1.5 rounded-xl border">
+                <!-- Accuracy Score -->
+              </div>
+            </div>
+
+            <!-- Real-time Detailed Diff Result Section -->
+            <div id="diff-output-panel" class="hidden mt-2 p-5 rounded-2xl bg-slate-50 border border-slate-200 flex flex-col gap-3">
+              <div class="flex items-center justify-between text-xs font-bold text-slate-600">
+                <span>글자 단위 정밀 대조 결과:</span>
+                <div class="flex items-center gap-3 text-[11px]">
+                  <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-emerald-200 border border-emerald-400 inline-block"></span> 일치</span>
+                  <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-rose-200 border border-rose-400 inline-block"></span> 누락(원문)</span>
+                  <span class="flex items-center gap-1"><span class="w-3 h-3 rounded bg-amber-200 border border-amber-400 inline-block"></span> 오탈자/추가</span>
+                </div>
+              </div>
+
+              <div id="diff-content" class="p-4 bg-white rounded-xl border border-slate-200 text-sm sm:text-base leading-relaxed tracking-wide font-medium"></div>
+
+              <div class="mt-1 pt-3 border-t border-slate-200">
+                <span class="text-xs font-bold text-slate-400 uppercase tracking-wider block mb-1">원문 표준 텍스트</span>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-sans select-text">${item.text}</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      `;
+
+      // Auto-focus textarea
+      setTimeout(() => {
+        const t = document.getElementById('typing-input');
+        if (t) t.focus();
+      }, 50);
+    }
+
+    function fillOriginalToInput() {
+      const items = getFilteredItems();
+      if (items.length === 0) return;
+      const curItem = items[currentIndex];
+      const input = document.getElementById('typing-input');
+      if (input) {
+        input.value = curItem.text;
+        input.focus();
+      }
+    }
+
+    /* =====================================================================
+       LCS / Character-level Diff Engine
+       ===================================================================== */
+    function checkTypingTest() {
+      const items = getFilteredItems();
+      if (items.length === 0) return;
+      const curItem = items[currentIndex];
+      const inputEl = document.getElementById('typing-input');
+      if (!inputEl) return;
+
+      const userText = inputEl.value;
+      const targetText = curItem.text;
+
+      const diffResult = computeCharacterDiff(targetText, userText);
+      const scoreBadge = document.getElementById('diff-score-badge');
+      const diffPanel = document.getElementById('diff-output-panel');
+      const diffContent = document.getElementById('diff-content');
+
+      // Calculate accuracy
+      const matchCount = diffResult.filter(d => d.type === 'correct').reduce((acc, d) => acc + d.val.length, 0);
+      const totalTargetLen = targetText.length;
+      const accuracy = totalTargetLen === 0 ? 100 : Math.max(0, Math.round((matchCount / totalTargetLen) * 100));
+
+      // Build HTML Diff representation
+      diffContent.innerHTML = diffResult.map(d => {
+        if (d.type === 'correct') {
+          return `<span class="diff-correct">${escapeHtml(d.val)}</span>`;
+        } else if (d.type === 'missing') {
+          return `<span class="diff-missing" title="원문에 누락됨">${escapeHtml(d.val)}</span>`;
+        } else if (d.type === 'extra') {
+          return `<span class="diff-extra" title="원문에 없는 추가/오탈자">${escapeHtml(d.val)}</span>`;
+        }
+      }).join('');
+
+      diffPanel.classList.remove('hidden');
+
+      // Update Score Badge
+      scoreBadge.classList.remove('hidden');
+      if (accuracy === 100) {
+        scoreBadge.className = "text-xs font-bold px-3 py-1.5 rounded-xl border bg-emerald-500 text-white border-emerald-500 flex items-center gap-1.5";
+        scoreBadge.innerHTML = `<i class="fa-solid fa-trophy"></i> <span>100% 토시 하나 틀리지 않고 완벽 일치!</span>`;
+        // Auto mark as mastered
+        if (!masteredItems.has(curItem.id)) {
+          markAsMastered();
+        }
+      } else if (accuracy >= 80) {
+        scoreBadge.className = "text-xs font-bold px-3 py-1.5 rounded-xl border bg-amber-50 text-amber-800 border-amber-300 flex items-center gap-1.5";
+        scoreBadge.innerHTML = `<i class="fa-solid fa-circle-exclamation"></i> <span>일치율: ${accuracy}% (조금만 더 정밀하게 다듬어보세요)</span>`;
+      } else {
+        scoreBadge.className = "text-xs font-bold px-3 py-1.5 rounded-xl border bg-rose-50 text-rose-800 border-rose-300 flex items-center gap-1.5";
+        scoreBadge.innerHTML = `<i class="fa-solid fa-triangle-exclamation"></i> <span>일치율: ${accuracy}% (빨간색 누락된 문구를 점검하세요)</span>`;
+      }
+    }
+
+    // Longest Common Subsequence algorithm on character arrays
+    function computeCharacterDiff(target, input) {
+      const m = target.length;
+      const n = input.length;
+      const dp = Array.from({ length: m + 1 }, () => new Uint16Array(n + 1));
+
+      for (let i = 0; i < m; i++) {
+        for (let j = 0; j < n; j++) {
+          if (target[i] === input[j]) {
+            dp[i + 1][j + 1] = dp[i][j] + 1;
+          } else {
+            dp[i + 1][j + 1] = Math.max(dp[i + 1][j], dp[i][j + 1]);
+          }
+        }
+      }
+
+      const diff = [];
+      let i = m;
+      let j = n;
+
+      while (i > 0 || j > 0) {
+        if (i > 0 && j > 0 && target[i - 1] === input[j - 1]) {
+          diff.push({ type: 'correct', val: target[i - 1] });
+          i--;
+          j--;
+        } else if (j > 0 && (i === 0 || dp[i][j - 1] >= dp[i - 1][j])) {
+          diff.push({ type: 'extra', val: input[j - 1] });
+          j--;
+        } else if (i > 0 && (j === 0 || dp[i][j - 1] < dp[i - 1][j])) {
+          diff.push({ type: 'missing', val: target[i - 1] });
+          i--;
+        }
+      }
+
+      diff.reverse();
+
+      // Compress consecutive same-type diff tokens for cleaner DOM rendering
+      const compressed = [];
+      diff.forEach(item => {
+        if (compressed.length > 0 && compressed[compressed.length - 1].type === item.type) {
+          compressed[compressed.length - 1].val += item.val;
+        } else {
+          compressed.push({ type: item.type, val: item.val });
+        }
+      });
+
+      return compressed;
+    }
+
+    function escapeHtml(text) {
+      return text
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    /* =====================================================================
+       TTS Voice Reader
+       ===================================================================== */
+    function speakCurrentText() {
+      const items = getFilteredItems();
+      if (items.length === 0) return;
+      const curItem = items[currentIndex];
+
+      if (!('speechSynthesis' in window)) {
+        return;
+      }
+
+      window.speechSynthesis.cancel();
+      const utterance = new SpeechSynthesisUtterance(curItem.text);
+      utterance.lang = 'ko-KR';
+      utterance.rate = 0.95;
+      window.speechSynthesis.speak(utterance);
+    }
+  </script>
+</body>
+</html>
